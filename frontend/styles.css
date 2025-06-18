@@ -1,0 +1,112 @@
+:root {
+  --bg: #f5f7fa;
+  --chat-bg: #ffffff;
+  --user-bg: #dcf8c6;
+  --bot-bg:  #f1f3f5;
+  --font: 'Inter', sans-serif;
+  --accent: #10a37f;
+  --radius: 12px;
+  --gutter: 20px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  display: flex; flex-direction: column;
+  height: 100vh; font-family: var(--font);
+  background: var(--bg);
+}
+header {
+  padding: var(--gutter);
+  background: var(--chat-bg);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+header h1 {
+  font-size: 2rem; margin-bottom: 4px;
+}
+header p {
+  color: #555;
+}
+#chat {
+  flex: 1; overflow-y: auto;
+  padding: var(--gutter);
+  display: flex; flex-direction: column;
+  gap: var(--gutter);
+}
+.message {
+  /* stack content then audio */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 70%;
+  padding: var(--gutter);
+  border-radius: var(--radius);
+  line-height: 1.5;
+  background: var(--chat-bg);
+}
+.message.user {
+  background: var(--user-bg);
+  align-self: flex-end;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+.message.assistant {
+  background: var(--bot-bg);
+  align-self: flex-start;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+.message .meta {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+.content {
+  /* text + snippet buttons */
+}
+.snippet-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.snippet-link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 500;
+  padding: 0;
+  font-size: 0.95rem;
+}
+.audio-container {
+  /* now sits below .content */
+  margin-top: 12px;
+  width: 100%;
+}
+.audio-container audio {
+  width: 100%;
+  height: 32px;
+}
+#chat-form {
+  display: flex;
+  gap: 12px;
+  padding: var(--gutter);
+  background: var(--chat-bg);
+  border-top: 1px solid #ddd;
+}
+#prompt {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+  font-size: 1rem;
+}
+#chat-form button {
+  background: var(--accent);
+  border: none;
+  color: white;
+  padding: 0 24px;
+  font-size: 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}

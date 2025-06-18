@@ -1,3 +1,4 @@
+import re
 import feedparser, requests, json
 from rich import print
 from rich.pretty import Pretty
@@ -8,11 +9,11 @@ import os
 feed = feedparser.parse("https://lexfridman.com/feed/podcast/")
 
 print(f'Number of podcasts: {len(feed.entries)}')
-
+feed.entries = feed.entries[:2]
 for episode in feed.entries:
     print(episode.title, episode.enclosures[0].href)
     mp3_url = episode.enclosures[0].href
-
+    
     filename = os.path.basename(mp3_url)   
     out_path = os.path.join("data", "audio", filename)
 

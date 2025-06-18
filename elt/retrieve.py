@@ -1,7 +1,6 @@
-from xml.dom.minidom import Document
 from dotenv import load_dotenv
-from langchain import hub
-from langchain_chroma import Chroma
+from langchain_core.documents import Document
+from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
 from langchain_openai import ChatOpenAI
 from langchain.prompts.chat import (
@@ -9,6 +8,9 @@ from langchain.prompts.chat import (
     SystemMessagePromptTemplate,
     HumanMessagePromptTemplate,
 )
+from rich import print
+from rich.pretty import Pretty
+
 import os
 load_dotenv()
 
@@ -19,7 +21,7 @@ embedding = OpenAIEmbeddings(
 vector_store = Chroma(persist_directory="./db/", embedding_function=embedding)
 
 llm = ChatOpenAI(
-  model="gpt-3.5-turbo",
+  model="gpt-4o",
   api_key=os.environ['OPENAI_API_KEY']
 )
 
@@ -38,7 +40,8 @@ custom_prompt = ChatPromptTemplate.from_messages([
 ])
 
 def retrieve(question: str):
-  results = vector_store.similarity_search(question, k=5)
+  results = vector_store.similarity_search_with_relevance_scores(question, k=5)
+  print(Pretty(results))
   return results
 
 def generate(question: str, context: list[Document]):
